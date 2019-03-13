@@ -110,9 +110,13 @@ void QuatCamera::setNearAndFarPlanes(float nearPlane, float farPlane)
 ////////////////////////////////////////////////////////////////////////////////////////////
 
 glm::quat fromAxisAngle(glm::vec3 axis, float angle)  /*TODO:: Complete this function*/
-{
+{/*TODO:: Complete this function*/ //Week--7
+
 	glm::quat rotation;
-	/*TODO:: Complete this function*/ //Week--7
+	rotation.w = cos(angle / 2);
+	rotation.x = sin(angle / 2) * axis.x;
+	rotation.y = sin(angle / 2) * axis.y;
+	rotation.z = sin(angle / 2) * axis.z;
 	return rotation;
 
 }
@@ -124,6 +128,8 @@ glm::quat fromAxisAngle(glm::vec3 axis, float angle)  /*TODO:: Complete this fun
 void QuatCamera::rotate(const float yaw, const float pitch)  /*TODO:: Complete this function given yaw and pitch.*/
 {
 	/*TODO:: Complete this function*/ //Week--7
+	_orientation = glm::normalize(fromAxisAngle(WORLDX, pitch)* _orientation);
+	_orientation = glm::normalize(fromAxisAngle(WORLDY, yaw)* _orientation);
 	updateView();
 
 }
@@ -183,7 +189,7 @@ void QuatCamera::updateView()
 /////////////////////////////////////////////////////////////////////////////////////////////
 void QuatCamera::roll(const float z)  /*TODO:: Complete this function*/
 {
-
+	_orientation = glm::normalize(fromAxisAngle(WORLDZ, z)* _orientation);
 	/*TODO:: Complete this function*/ //Week--7
 	updateView();
 
